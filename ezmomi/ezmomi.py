@@ -7,6 +7,7 @@ import sys
 import errno
 from pprint import pprint, pformat
 import time
+import getpass
 from netaddr import IPNetwork, IPAddress
 import yaml
 import ssl
@@ -32,8 +33,17 @@ class EZMomi(object):
         default_cfg_dir = "%s/.config/ezmomi" % os.path.expanduser("~")
         default_config_file = "%s/config.yml" % default_cfg_dir
 
+        if kwargs['server'] and kwargs['username']:
+            config = {}
+            for key, value in kwargs.items():
+                if value is not None:
+                    config[key] = value
+
+            config['password'] = getpass.getpass()
+
+            return config
         # use path from env var if it's set and valid
-        if 'EZMOMI_CONFIG' in os.environ:
+        elif 'EZMOMI_CONFIG' in os.environ:
             if os.path.isfile(os.environ['EZMOMI_CONFIG']):
                 config_file = os.environ['EZMOMI_CONFIG']
             else:

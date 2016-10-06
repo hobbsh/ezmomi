@@ -39,6 +39,34 @@ def arg_setup():
         description="Shared/common arguments for all subcommands"
     )
 
+    common_parser.add_argument(
+        '--server',
+        dest='server',
+        required=True,
+        help="vCenter server hostname or IP"
+    )
+
+    common_parser.add_argument(
+        '--username',
+        dest='username',
+        required=True,
+        help="vCenter server username"
+    )
+
+    common_parser.add_argument(
+        '--password',
+        dest='password',
+        help="vCenter server password"
+    )
+
+    common_parser.add_argument(
+        '--port',
+        dest='port',
+        default=443,
+        type=int,
+        help="vCenter server port. Defaults to 443"
+    )
+
     # list
     list_parser = subparsers.add_parser(
         "list",
